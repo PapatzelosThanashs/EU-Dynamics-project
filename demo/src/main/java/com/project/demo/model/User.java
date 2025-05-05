@@ -19,9 +19,11 @@ public class User {
     private Long id;
 
     @NotBlank(message = "Username is required")
+    @Size(max = 12, message = "Username must be at most 12 characters")
     private String name;
 
     @NotBlank(message = "Surname is required")
+    @Size(max = 12, message = "Surname must be at most 12 characters")
     private String surname;
 
     @NotNull(message = "Birthdate is required")
