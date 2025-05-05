@@ -6,11 +6,20 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import com.project.demo.model.User;
+import com.project.demo.service.UserService;
+import org.springframework.web.bind.annotation.RequestBody;
 
 
 @RestController
 @RequestMapping("api/users")
 public class UserController {
+
+    private UserService userService;
+
+    public UserController(UserService userService){
+        this.userService= userService;
+    } 
 
     /* Get all users */
     @GetMapping
@@ -20,8 +29,8 @@ public class UserController {
 
     /* Create new user */
     @PostMapping
-    public String create() {
-        return "Post-create new user";
+    public User create(@RequestBody User user) {
+        return userService.saveUser(user);
     }
 
     /* Get user with id=?*/
