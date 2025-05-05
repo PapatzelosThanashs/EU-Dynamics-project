@@ -1,5 +1,7 @@
 C:\Users\User\Desktop\EU-Dynamics-project\demo\src\main\java\com\project\demo\App.java
 C:\Users\User\Desktop\EU-Dynamics-project\demo\src\main\java\com\project\demo\controller\UserController.java
+C:\Users\User\Desktop\EU-Dynamics-project\demo\src\main\java\com\project\demo\exception\GlobalExceptionHandler.java
+C:\Users\User\Desktop\EU-Dynamics-project\demo\src\main\java\com\project\demo\exception\UserNotFoundException.java
 C:\Users\User\Desktop\EU-Dynamics-project\demo\src\main\java\com\project\demo\model\User.java
 C:\Users\User\Desktop\EU-Dynamics-project\demo\src\main\java\com\project\demo\repository\UserRepository.java
 C:\Users\User\Desktop\EU-Dynamics-project\demo\src\main\java\com\project\demo\service\UserService.java
