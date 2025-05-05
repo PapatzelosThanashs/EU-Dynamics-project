@@ -19,8 +19,8 @@ public class UserService {
         
     }
 
-    public void findUser() {
-       
+    public User findUser(Long id) {
+      return userRepository.findById(id).orElseThrow();
   
     }
 

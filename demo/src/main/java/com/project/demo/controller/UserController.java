@@ -35,8 +35,8 @@ public class UserController {
 
     /* Get user with id=?*/
     @GetMapping("/{id}")
-    public String get(@PathVariable Long id) {
-        return "Get user "+ id;
+    public User get(@PathVariable Long id) {
+        return userService.findUser(id);
     }
 
     /* Delete user with id=?*/
