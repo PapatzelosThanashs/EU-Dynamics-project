@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import com.project.demo.model.User;
 import com.project.demo.service.UserService;
 import org.springframework.web.bind.annotation.RequestBody;
+import java.util.List;
+
 
 
 @RestController
@@ -23,8 +25,8 @@ public class UserController {
 
     /* Get all users */
     @GetMapping
-    public String all() {
-        return "Get all users";
+    public List<User> all() {
+        return userService.findAll();
     }
 
     /* Create new user */

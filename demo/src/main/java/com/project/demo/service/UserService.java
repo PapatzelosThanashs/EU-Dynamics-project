@@ -4,6 +4,8 @@ import com.project.demo.model.User;
 import com.project.demo.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
+import java.util.List;
+
 
 @Service
 public class UserService {
@@ -15,8 +17,8 @@ public class UserService {
         this.userRepository=userRepository;
     }
 
-    public void findAll() {
-        
+    public List<User> findAll() {
+       return userRepository.findAll();
     }
 
     public User findUser(Long id) {
