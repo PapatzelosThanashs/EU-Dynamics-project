@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 import org.springframework.dao.DataAccessException;
 import com.project.demo.exception.UserNotFoundException;
+import com.project.demo.model.Address;
+
+
 
 
 /**possible DB exception should be auto-thrown from spring */
@@ -32,6 +35,13 @@ public class UserService {
     }
 
     public User saveUser(User user) {
+
+        if (user.getAddresses() != null) {
+        for (Address address : user.getAddresses()) {
+            address.setUser(user);  // Set the back-reference
+        }
+    }
+
             return userRepository.save(user);
   
     }

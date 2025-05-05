@@ -8,6 +8,16 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.*;
+import com.project.demo.model.Address;
+import java.util.List;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.CascadeType;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.FetchType;
+
+
+
 
 @Entity
 public class User {
@@ -40,20 +50,26 @@ public class User {
 
     }
  
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @JsonManagedReference
+    private List<Address> addresses;
+  
+
+
 
     
     public Long getId() {
-         return id;
+        return id;
     }
     public void setId(Long id) {
-         this.id = id;
+        this.id = id;
     }
 
     public String getName() {
-         return name;
+        return name;
     }
     public void setName(String name) {
-         this.name = name; 
+        this.name = name; 
     }
 
     public String getSurname() { 
@@ -75,5 +91,14 @@ public class User {
     }
     public void setBirthdate(LocalDate birthdate) { 
         this.birthdate= birthdate; 
+    }
+
+
+   public List<Address> getAddresses() {
+        return addresses;
+    }
+
+    public void setAddresses(List<Address> addresses) {
+        this.addresses = addresses;
     }
 }
