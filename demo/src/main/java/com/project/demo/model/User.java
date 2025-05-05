@@ -7,26 +7,33 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.*;
 
 @Entity
 public class User {
 
-     public enum Gender { M, F }
+    public enum Gender { M, F }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "Username is required")
     private String name;
+
+    @NotBlank(message = "Surname is required")
     private String surname;
 
+    @NotNull(message = "Birthdate is required")
     private LocalDate birthdate;
 
-   
+    
+    @NotNull(message = "Gender is required")
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
 
+/**need for JPA and Jackson */
     public User() {
 
     }
