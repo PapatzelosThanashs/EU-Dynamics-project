@@ -1,2 +1,6 @@
+com\project\demo\repository\UserRepository.class
+com\project\demo\service\UserService.class
+com\project\demo\model\User$Gender.class
+com\project\demo\model\User.class
 com\project\demo\App.class
 com\project\demo\controller\UserController.class
