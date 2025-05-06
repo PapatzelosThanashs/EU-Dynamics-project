@@ -8,7 +8,6 @@ import jakarta.validation.constraints.*;
 import com.project.demo.model.User;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.JoinColumn;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.FetchType;
 
 
@@ -26,7 +25,6 @@ public class Address {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
-    @JsonBackReference
     private User user;  // Foreign key to User
 
 

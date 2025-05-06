@@ -3,11 +3,15 @@ package com.project.demo.service;
 import com.project.demo.model.User;
 import com.project.demo.repository.UserRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 import org.springframework.dao.DataAccessException;
 import com.project.demo.exception.UserNotFoundException;
 import com.project.demo.model.Address;
+import com.project.demo.dto.UserDTO;
+import com.project.demo.dto.AddressDTO;
+import com.project.demo.mapper.UserMapper;
+import java.util.stream.Collectors;
+
 
 
 
@@ -18,31 +22,43 @@ import com.project.demo.model.Address;
 public class UserService {
 
     private UserRepository userRepository;
+    private UserMapper userMapper;
 
     
-    public  UserService(UserRepository userRepository){
+    public  UserService(UserRepository userRepository, UserMapper userMapper){
         this.userRepository=userRepository;
+        this.userMapper = userMapper;
+    }
+    
+
+    public List<UserDTO> findAll() {
+            return userRepository.findAll().stream().map(userMapper::userToUserDTO).collect(Collectors.toList());
     }
 
-    public List<User> findAll() {
-            return userRepository.findAll();
-    }
+    public UserDTO findUser(Long id) {
 
-    public User findUser(Long id) {
+        User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
 
-            return userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
+            return userMapper.userToUserDTO(user);  // Use MapStruct to map User to UserDTO
   
     }
 
-    public User saveUser(User user) {
+    public UserDTO saveUser(UserDTO userDTO) {
+
+         User user = userMapper.userDTOToUser(userDTO);  // Use MapStruct to map UserDTO to User
+
 
         if (user.getAddresses() != null) {
-        for (Address address : user.getAddresses()) {
-            address.setUser(user);  // Set the back-reference
+            for (Address address : user.getAddresses()) {
+                address.setUser(user);  // Set the back-reference
+                }
         }
-    }
 
-            return userRepository.save(user);
+ 
+
+        User savedUser = userRepository.save(user);
+        return userMapper.userToUserDTO(savedUser);  // Use MapStruct to map saved User to UserDTO
+
   
     }
 
@@ -56,6 +72,7 @@ public class UserService {
  
   
     }
+
 
 
 }

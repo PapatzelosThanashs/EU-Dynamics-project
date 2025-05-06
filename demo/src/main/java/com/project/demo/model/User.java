@@ -13,7 +13,6 @@ import java.util.List;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.CascadeType;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.FetchType;
 
 
@@ -28,8 +27,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "Username is required")
-    @Size(max = 12, message = "Username must be at most 12 characters")
+
     private String name;
 
     @NotBlank(message = "Surname is required")
@@ -51,7 +49,6 @@ public class User {
     }
  
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    @JsonManagedReference
     private List<Address> addresses;
   
 

@@ -11,6 +11,7 @@ import com.project.demo.service.UserService;
 import org.springframework.web.bind.annotation.RequestBody;
 import java.util.List;
 import jakarta.validation.Valid;
+import com.project.demo.dto.UserDTO;
 
 
 
@@ -26,19 +27,19 @@ public class UserController {
 
     /* Get all users */
     @GetMapping
-    public List<User> all() {
+    public List<UserDTO> all() {
         return userService.findAll();
     }
 
     /* Create new user */
     @PostMapping
-    public User create(@RequestBody @Valid User user) {
-        return userService.saveUser(user);
+    public UserDTO create(@RequestBody @Valid UserDTO UserDTO) {
+        return userService.saveUser(UserDTO);
     }
 
     /* Get user with id=?*/
     @GetMapping("/{id}")
-    public User get(@PathVariable Long id) {
+    public UserDTO get(@PathVariable Long id) {
         return userService.findUser(id);
     }
 
