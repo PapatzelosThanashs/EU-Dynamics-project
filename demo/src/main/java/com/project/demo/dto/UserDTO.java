@@ -1,7 +1,7 @@
 package com.project.demo.dto;
 
 import java.time.LocalDate;
-import java.util.List;
+
 
 public class UserDTO {
 
@@ -12,7 +12,8 @@ public class UserDTO {
     private String surname;
     private LocalDate birthdate;
     private Gender gender;  
-    private List<AddressDTO> addresses;
+    private String workAddress;
+    private String homeAddress;
 
     // Constructor
     public UserDTO() {}
@@ -58,11 +59,20 @@ public class UserDTO {
         this.gender = gender;
     }
 
-    public List<AddressDTO> getAddresses() {
-        return addresses;
+    public String getWorkAddress() {
+    return workAddress;
     }
 
-    public void setAddresses(List<AddressDTO> addresses) {
-        this.addresses = addresses;
+    public void setWorkAddress(String workAddress) {
+        this.workAddress = workAddress;
     }
+
+    public String getHomeAddress() {
+        return homeAddress;
+    }
+
+    public void setHomeAddress(String homeAddress) {
+        this.homeAddress = homeAddress;
+    }
+
 }

@@ -5,7 +5,7 @@ public class AddressDTO {
     private Long id;
     private String workAddress;
     private String homeAddress;
-    private Long userId; // To link back to the User (you could change this if needed)
+  
 
     // Constructor
     public AddressDTO() {}
@@ -35,11 +35,5 @@ public class AddressDTO {
         this.homeAddress = homeAddress;
     }
 
-    public Long getUserId() {
-        return userId;
-    }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
 }

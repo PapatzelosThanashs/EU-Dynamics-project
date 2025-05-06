@@ -47,12 +47,12 @@ public class UserService {
 
          User user = userMapper.userDTOToUser(userDTO);  // Use MapStruct to map UserDTO to User
 
-
-        if (user.getAddresses() != null) {
-            for (Address address : user.getAddresses()) {
-                address.setUser(user);  // Set the back-reference
-                }
-        }
+        System.out.println(user.getName());
+        //if (user.getAddresses() != null) {
+           // for (Address address : user.getAddresses()) {
+                //address.setUser(user);  // Set the back-reference
+             //  }
+        //}
 
  
 

@@ -6,9 +6,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.*;
 import com.project.demo.model.User;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.FetchType;
+
 
 
 
@@ -19,13 +17,11 @@ public class Address {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String work_address;
+    private String workAddress;
 
-    private String home_address;
+    private String homeAddress;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;  // Foreign key to User
+ 
 
 
 /**need for JPA and Jackson */
@@ -44,26 +40,20 @@ public class Address {
     }
 
     public String getWorkAddress() {
-        return work_address;
+        return workAddress;
     }
-    public void setWorkAddress(String work_address) {
-        this.work_address = work_address; 
+    public void setWorkAddress(String workAddress) {
+        this.workAddress = workAddress; 
     }
 
      public String getHomeAddress() {
-        return home_address;
+        return homeAddress;
     }
-    public void setHomeAddress(String home_address) {
-        this.home_address = home_address; 
+    public void setHomeAddress(String homeAddress) {
+        this.homeAddress = homeAddress; 
     }
 
 
-    public User getUser() {
-        return user; 
-    }  
-    public void setUser(User user) {
-        this.user = user;
-    }  
 
    
 }

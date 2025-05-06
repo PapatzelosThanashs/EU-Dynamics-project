@@ -11,20 +11,21 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface UserMapper {
 
-
+    @Mapping(source = "workAddress", target = "address.workAddress")
+    @Mapping(source = "homeAddress", target = "address.homeAddress")
     User userDTOToUser(UserDTO dto);
 
 
+    @Mapping(source = "address.workAddress", target = "workAddress")
+    @Mapping(source = "address.homeAddress", target = "homeAddress")
     UserDTO userToUserDTO(User user);
 
 
-    @Mapping(source = "userId", target = "user.id")  // Mapping to the userId in AddressDTO
+
     Address addressDTOToAddress(AddressDTO addressDTO);
 
 
-    @Mapping(source = "user.id", target = "userId")  // Mapping to the User in Address
+
     AddressDTO addressToAddressDTO(Address address);
 
-    List<AddressDTO> addressesToAddressDTOs(List<Address> addresses);
-    List<Address> addressDTOsToAddresses(List<AddressDTO> addressDTOs);
 }
