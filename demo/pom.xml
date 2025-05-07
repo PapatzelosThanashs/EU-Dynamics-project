@@ -30,13 +30,9 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
-        <dependency><!-- annotations @NotBlank etc -->
-            <groupId>jakarta.validation</groupId>
-            <artifactId>jakarta.validation-api</artifactId>
-        </dependency>
-        <dependency><!-- actual implementation of the validation logic -->
-            <groupId>org.hibernate.validator</groupId>
-            <artifactId>hibernate-validator</artifactId>
+        <dependency>
+            <groupId>org.springframework.boot</groupId><!-- annotations @NotBlank etc. Validations for entities/DTO's -->
+            <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
         <dependency>
             <groupId>org.mapstruct</groupId>
@@ -55,8 +51,10 @@
             <version>1.18.30</version> <!-- use latest -->
             <scope>provided</scope>
         </dependency>
-
-
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-mysql</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
