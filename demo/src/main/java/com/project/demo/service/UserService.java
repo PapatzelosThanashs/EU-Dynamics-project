@@ -32,34 +32,25 @@ public class UserService {
     
 
     public List<UserDTO> findAll() {
-            return userRepository.findAll().stream().map(userMapper::userToUserDTO).collect(Collectors.toList());
+        
+    return userRepository.findAll().stream().map(userMapper::userToUserDTO).collect(Collectors.toList());
     }
 
     public UserDTO findUser(Long id) {
 
         User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
 
-            return userMapper.userToUserDTO(user);  // Use MapStruct to map User to UserDTO
+    return userMapper.userToUserDTO(user);  // Use MapStruct to map User to UserDTO
   
     }
 
     public UserDTO saveUser(UserDTO userDTO) {
 
-         User user = userMapper.userDTOToUser(userDTO);  // Use MapStruct to map UserDTO to User
-
-        System.out.println(user.getName());
-        //if (user.getAddresses() != null) {
-           // for (Address address : user.getAddresses()) {
-                //address.setUser(user);  // Set the back-reference
-             //  }
-        //}
-
- 
+        User user = userMapper.userDTOToUser(userDTO);  // Use MapStruct to map UserDTO to User
 
         User savedUser = userRepository.save(user);
-        return userMapper.userToUserDTO(savedUser);  // Use MapStruct to map saved User to UserDTO
-
-  
+    
+    return userMapper.userToUserDTO(savedUser);  // Use MapStruct to map saved User to UserDTO
     }
 
     public void deleteUser(Long id) {

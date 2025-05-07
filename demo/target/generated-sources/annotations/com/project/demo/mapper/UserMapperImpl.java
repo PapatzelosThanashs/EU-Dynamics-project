@@ -9,8 +9,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-05-07T00:53:19+0300",
-    comments = "version: 1.5.5.Final, compiler: javac, environment: Java 24.0.1 (Oracle Corporation)"
+    date = "2025-05-07T14:27:45+0300",
+    comments = "version: 1.5.5.Final, compiler: javac, environment: Java 17.0.12 (Oracle Corporation)"
 )
 @Component
 public class UserMapperImpl implements UserMapper {
@@ -23,12 +23,12 @@ public class UserMapperImpl implements UserMapper {
 
         User user = new User();
 
-        user.setAddress( userDTOToAddress( dto ) );
         user.setId( dto.getId() );
         user.setName( dto.getName() );
         user.setSurname( dto.getSurname() );
-        user.setGender( genderToGender( dto.getGender() ) );
         user.setBirthdate( dto.getBirthdate() );
+        user.setGender( genderToGender( dto.getGender() ) );
+        user.setAddress( addressDTOToAddress( dto.getAddress() ) );
 
         return user;
     }
@@ -41,28 +41,27 @@ public class UserMapperImpl implements UserMapper {
 
         UserDTO userDTO = new UserDTO();
 
-        userDTO.setWorkAddress( userAddressWorkAddress( user ) );
-        userDTO.setHomeAddress( userAddressHomeAddress( user ) );
         userDTO.setId( user.getId() );
         userDTO.setName( user.getName() );
         userDTO.setSurname( user.getSurname() );
         userDTO.setBirthdate( user.getBirthdate() );
         userDTO.setGender( genderToGender1( user.getGender() ) );
+        userDTO.setAddress( addressToAddressDTO( user.getAddress() ) );
 
         return userDTO;
     }
 
     @Override
-    public Address addressDTOToAddress(AddressDTO addressDTO) {
-        if ( addressDTO == null ) {
+    public Address addressDTOToAddress(AddressDTO dto) {
+        if ( dto == null ) {
             return null;
         }
 
         Address address = new Address();
 
-        address.setId( addressDTO.getId() );
-        address.setWorkAddress( addressDTO.getWorkAddress() );
-        address.setHomeAddress( addressDTO.getHomeAddress() );
+        address.setId( dto.getId() );
+        address.setWorkAddress( dto.getWorkAddress() );
+        address.setHomeAddress( dto.getHomeAddress() );
 
         return address;
     }
@@ -82,19 +81,6 @@ public class UserMapperImpl implements UserMapper {
         return addressDTO;
     }
 
-    protected Address userDTOToAddress(UserDTO userDTO) {
-        if ( userDTO == null ) {
-            return null;
-        }
-
-        Address address = new Address();
-
-        address.setWorkAddress( userDTO.getWorkAddress() );
-        address.setHomeAddress( userDTO.getHomeAddress() );
-
-        return address;
-    }
-
     protected User.Gender genderToGender(UserDTO.Gender gender) {
         if ( gender == null ) {
             return null;
@@ -111,36 +97,6 @@ public class UserMapperImpl implements UserMapper {
         }
 
         return gender1;
-    }
-
-    private String userAddressWorkAddress(User user) {
-        if ( user == null ) {
-            return null;
-        }
-        Address address = user.getAddress();
-        if ( address == null ) {
-            return null;
-        }
-        String workAddress = address.getWorkAddress();
-        if ( workAddress == null ) {
-            return null;
-        }
-        return workAddress;
-    }
-
-    private String userAddressHomeAddress(User user) {
-        if ( user == null ) {
-            return null;
-        }
-        Address address = user.getAddress();
-        if ( address == null ) {
-            return null;
-        }
-        String homeAddress = address.getHomeAddress();
-        if ( homeAddress == null ) {
-            return null;
-        }
-        return homeAddress;
     }
 
     protected UserDTO.Gender genderToGender1(User.Gender gender) {

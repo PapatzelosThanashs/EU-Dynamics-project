@@ -12,11 +12,12 @@ import com.project.demo.model.Address;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.JoinColumn;
+import lombok.Data;
 
 
 
 
-
+@Data
 @Entity
 public class User {
 
@@ -42,7 +43,7 @@ public class User {
     private Gender gender;
 
 
-/**need for JPA and Jackson */
+/**need for JPA and Jackson  or @NoArgsContructor <- Lombok*/
     public User() {
 
     }
@@ -53,49 +54,4 @@ public class User {
   
 
 
-
-    
-    public Long getId() {
-        return id;
-    }
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-    public void setName(String name) {
-        this.name = name; 
-    }
-
-    public String getSurname() { 
-        return surname;
-    }
-    public void setSurname(String surname) { 
-        this.surname = surname; 
-    }
-
-    public Gender getGender() { 
-        return gender; 
-    }
-    public void setGender(Gender gender) { 
-        this.gender = gender; 
-    }
-
-    public LocalDate getBirthdate() { 
-        return birthdate; 
-    }
-    public void setBirthdate(LocalDate birthdate) { 
-        this.birthdate= birthdate; 
-    }
-
-
-   public Address getAddress() {
-        return address;
-    }
-
-    public void setAddress(Address address) {
-        this.address = address;
-    }
 }
