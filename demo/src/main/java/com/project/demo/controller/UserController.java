@@ -14,8 +14,14 @@ import jakarta.validation.Valid;
 import com.project.demo.dto.UserDTO;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.validation.annotation.Validated; // for Validate
+import org.springframework.web.bind.annotation.CrossOrigin; //<--- delete this. only for testing vue
+import com.project.demo.dto.validation.OnCreate;
+import com.project.demo.dto.validation.OnPatch;
 
 
+
+@CrossOrigin(origins = "http://localhost:8080") 
 
 @RestController
 @RequestMapping("api/users")
@@ -35,8 +41,8 @@ public class UserController {
 
     /* Create new user */
     @PostMapping
-    public UserDTO create(@RequestBody @Valid UserDTO UserDTO) {
-        return userService.saveUser(UserDTO);
+    public UserDTO create(@RequestBody @Validated(OnCreate.class) UserDTO userDTO) {
+        return userService.saveUser(userDTO);
     }
 
     /* Get user with id=?*/
@@ -53,15 +59,15 @@ public class UserController {
 
     /* Patch user */
     @PatchMapping("/{id}")
-    public UserDTO patch(@PathVariable Long id, @RequestBody UserDTO UserDTO) {
-      return  userService.patchUser(id,UserDTO);
+    public UserDTO patch(@PathVariable Long id, @RequestBody @Validated(OnPatch.class) UserDTO userDTO) {
+      return  userService.patchUser(id,userDTO);
         
     }
 
       /* Update user */
     @PutMapping("/{id}")
-    public UserDTO put(@PathVariable Long id, @RequestBody @Valid UserDTO UserDTO) {
-        return userService.updateUser(id, UserDTO);
+    public UserDTO put(@PathVariable Long id, @RequestBody @Validated(OnCreate.class) UserDTO userDTO) {
+        return userService.updateUser(id, userDTO);
     }
 
 

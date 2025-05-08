@@ -8,6 +8,8 @@ com\project\demo\model\Address.class
 com\project\demo\model\User.class
 com\project\demo\exception\GlobalExceptionHandler.class
 com\project\demo\exception\UserNotFoundException.class
+com\project\demo\dto\validation\OnPatch.class
+com\project\demo\dto\validation\OnCreate.class
 com\project\demo\model\User$Gender.class
 com\project\demo\dto\AddressDTO.class
 com\project\demo\App.class

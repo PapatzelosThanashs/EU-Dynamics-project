@@ -64,6 +64,7 @@ public class UserService {
   
     }
 
+    /* update specific fields */
     public UserDTO patchUser(Long id, UserDTO userDTO) {
 
         User existingUser = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
@@ -82,7 +83,7 @@ public class UserService {
     return userMapper.userToUserDTO(updatedUser);
     }
 
-
+    /* update whole record */
     public UserDTO updateUser(Long id, UserDTO userDTO) {
 
 
