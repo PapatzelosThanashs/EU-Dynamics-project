@@ -83,4 +83,19 @@ public class UserService {
     }
 
 
+    public UserDTO updateUser(Long id, UserDTO userDTO) {
+
+
+        User existingUser = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
+
+        User updatedUser = userMapper.userDTOToUser(userDTO);
+
+        updatedUser.setId(id);
+
+        updatedUser = userRepository.save(updatedUser);
+    
+    return userMapper.userToUserDTO(updatedUser);  // Use MapStruct to map saved User to UserDTO
+    }
+
+
 }

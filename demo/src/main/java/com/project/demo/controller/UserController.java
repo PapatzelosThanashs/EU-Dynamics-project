@@ -13,6 +13,7 @@ import java.util.List;
 import jakarta.validation.Valid;
 import com.project.demo.dto.UserDTO;
 import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 
 
 
@@ -55,6 +56,12 @@ public class UserController {
     public UserDTO patch(@PathVariable Long id, @RequestBody UserDTO UserDTO) {
       return  userService.patchUser(id,UserDTO);
         
+    }
+
+      /* Update user */
+    @PutMapping("/{id}")
+    public UserDTO put(@PathVariable Long id, @RequestBody @Valid UserDTO UserDTO) {
+        return userService.updateUser(id, UserDTO);
     }
 
 
