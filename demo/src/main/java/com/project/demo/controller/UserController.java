@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import java.util.List;
 import jakarta.validation.Valid;
 import com.project.demo.dto.UserDTO;
+import org.springframework.web.bind.annotation.PatchMapping;
 
 
 
@@ -48,5 +49,13 @@ public class UserController {
     public void delete(@PathVariable Long id) {
          userService.deleteUser(id);
     }
+
+    /* Patch user */
+    @PatchMapping("/{id}")
+    public UserDTO patch(@PathVariable Long id, @RequestBody UserDTO UserDTO) {
+      return  userService.patchUser(id,UserDTO);
+        
+    }
+
 
 }

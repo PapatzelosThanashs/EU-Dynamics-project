@@ -64,6 +64,23 @@ public class UserService {
   
     }
 
+    public UserDTO patchUser(Long id, UserDTO userDTO) {
+
+        User existingUser = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
+
+         /* Manually update only non-null fields from userDTO */
+    if (userDTO.getName() != null) existingUser.setName(userDTO.getName());
+    if (userDTO.getSurname() != null) existingUser.setSurname(userDTO.getSurname());
+    if (userDTO.getBirthdate() != null) existingUser.setBirthdate(userDTO.getBirthdate());
+    if (userDTO.getGender() != null) existingUser.setGender(userMapper.userDTOToUser(userDTO).getGender());
+    if (userDTO.getAddress() != null) {
+        Address address = userMapper.addressDTOToAddress(userDTO.getAddress());
+        existingUser.setAddress(address);
+    }
+
+    User updatedUser = userRepository.save(existingUser);
+    return userMapper.userToUserDTO(updatedUser);
+    }
 
 
 }

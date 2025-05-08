@@ -6,22 +6,36 @@ import com.project.demo.model.Address;
 import com.project.demo.dto.AddressDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.Named;
 
 @Mapper(componentModel = "spring")
 public interface UserMapper {
 
-
+    @Mapping(source = "gender", target = "gender", qualifiedByName = "dtoToEntityGender")
     User userDTOToUser(UserDTO dto);
 
-
+    @Mapping(source = "gender", target = "gender", qualifiedByName = "entityToDtoGender")
     UserDTO userToUserDTO(User user);
 
 
 
     Address addressDTOToAddress(AddressDTO dto);
 
-
-
     AddressDTO addressToAddressDTO(Address address);
+    
+
+    /* Mapstruct can not automap enums, Custom enum mapping */
+
+    @Named("dtoToEntityGender")
+    default User.Gender mapDtoGender(UserDTO.Gender gender) {
+        if (gender == null) return null;
+        return User.Gender.valueOf(gender.name());
+    }
+
+    @Named("entityToDtoGender")
+    default UserDTO.Gender mapEntityGender(User.Gender gender) {
+        if (gender == null) return null;
+        return UserDTO.Gender.valueOf(gender.name());
+    }
 
 }
