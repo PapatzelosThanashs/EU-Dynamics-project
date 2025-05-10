@@ -1,18 +1,18 @@
 <template>
     <div class="displayusers">
     
-        <table border="1">
+        <table class="user-table">
             <thead>
                 <tr>
-                <th>Name</th>
-                <th>Surname</th>
+                <th>NAME</th>
+                <th>SURNAME</th>
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="user in users" :key="user.id" >
+                <tr class="user-row" v-for="user in users" :key="user.id"  @click="userDetails(user)">
                 <td>{{ user.name }}</td>
                 <td>{{ user.surname }}</td>
-                <td><button @click="deleteUser(user.id)">Delete User</button></td>
+                <td><button class="delete-button" @click.stop="deleteUser(user.id)">Delete User</button></td>
                 </tr>
             </tbody>
         </table>
@@ -53,6 +53,34 @@ import axios from "axios";
           alert("Delete failed.");
         }
       }
+    },
+    userDetails(user){
+        const userHtml = `
+    <html>
+      <head>
+        <title>User Details</title>
+        <style>
+          body { font-family: Arial, sans-serif; padding: 2rem; background: #f0f0f0; }
+          h1 { color: #333; }
+          p { margin-bottom: 1rem; }
+        </style>
+      </head>
+      <body>
+        <h1>User Details</h1>
+        <p><strong>Name:</strong> ${user.name}</p>
+        <p><strong>Surname:</strong> ${user.surname}</p>
+        <p><strong>Gender:</strong> ${user.gender}</p>
+        <p><strong>Birthdate:</strong> ${user.birthdate}</p>
+        <p><strong>Work Address:</strong> ${user.address.workAddress}</p>
+        <p><strong>Home Address:</strong> ${user.address.homeAddress}</p>
+        </body>
+    </html>
+  `;
+  
+const blob = new Blob([userHtml], { type: 'text/html' });
+const url = URL.createObjectURL(blob);
+window.open(url);
+
     }
   },
     mounted(){
@@ -70,6 +98,49 @@ import axios from "axios";
     flex-direction: column;
     align-items: center;
   }
+
+  .user-table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid #ffffff;
+  font-family: Arial, sans-serif;
+}
+
+.user-table th,
+.user-table td {
+  padding: 12px 15px;
+  border: 1px solid #0f0101;
+  text-align: left;
+}
+
+.user-table thead {
+  background-color: #464545;
+  color: white;
+}
+
+.user-row {
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.user-row:hover {
+  background-color: #e69e63;
+}
+
+.delete-button {
+  background-color: #c2574c;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.delete-button:hover {
+  background-color: #e6331f;
+}
+
 
   </style>
   
