@@ -18,6 +18,7 @@
   </template>
 
 <script>
+
 export default {
   name: 'HomePage',
 }
@@ -31,7 +32,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  border-radius: 16px;
+  border-radius: 0px 0px 16px 16px;
 }
 
 

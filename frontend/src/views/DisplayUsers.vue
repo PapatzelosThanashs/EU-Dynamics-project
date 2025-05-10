@@ -93,7 +93,7 @@ window.open(url);
   .displayusers {
     min-height: 100vh;
     padding: 2rem;
-    background: linear-gradient(to right, #f0f4f8, #ffffff);
+    background: rgb(255, 247, 237);
     display: flex;
     flex-direction: column;
     align-items: center;

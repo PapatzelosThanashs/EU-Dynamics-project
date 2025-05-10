@@ -3,6 +3,7 @@
     <header class="hero">
     <h1>Project: Simple Web application</h1>
     </header>
+    <NavBar />
    <router-view/>
   </div>
   <footer class="app-footer">
@@ -11,10 +12,13 @@
 </template>
 
 <script>
-
+import NavBar from './components/navBar.vue'; 
 
 export default {
   name: 'App',
+  components: {
+    NavBar,
+  },
 
 }
 </script>

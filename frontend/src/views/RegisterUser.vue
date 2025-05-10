@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="registerForm">
     
     <h2>Register New User</h2>
     <form @submit.prevent="createUser">
@@ -108,6 +108,15 @@
   </script>
   
   <style scoped>
+  .registerForm{
+    min-height: 100vh;
+    padding: 2rem;
+    background: rgb(255, 247, 237);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
 form {
   width: 300px;
   margin: auto;
