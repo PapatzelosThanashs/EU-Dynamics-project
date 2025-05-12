@@ -11,6 +11,7 @@ import com.project.demo.dto.UserDTO;
 import com.project.demo.dto.AddressDTO;
 import com.project.demo.mapper.UserMapper;
 import java.util.stream.Collectors;
+import com.project.demo.dto.UserSummaryDTO;
 
 
 
@@ -31,9 +32,9 @@ public class UserService {
     }
     
 
-    public List<UserDTO> findAll() {
+    public List<UserSummaryDTO> findAll() {
         
-    return userRepository.findAll().stream().map(userMapper::userToUserDTO).collect(Collectors.toList());
+    return userRepository.findAll().stream().map(userMapper::userToUserSummaryDTO).collect(Collectors.toList());
     }
 
     public UserDTO findUser(Long id) {

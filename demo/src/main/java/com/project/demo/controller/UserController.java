@@ -18,6 +18,7 @@ import org.springframework.validation.annotation.Validated; // for Validate
 import org.springframework.web.bind.annotation.CrossOrigin; //<--- delete this. only for testing vue
 import com.project.demo.dto.validation.OnCreate;
 import com.project.demo.dto.validation.OnPatch;
+import com.project.demo.dto.UserSummaryDTO;
 
 
 
@@ -35,7 +36,7 @@ public class UserController {
 
     /* Get all users */
     @GetMapping
-    public List<UserDTO> all() {
+    public List<UserSummaryDTO> all() {
         return userService.findAll();
     }
 

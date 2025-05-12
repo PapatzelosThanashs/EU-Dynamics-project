@@ -2,6 +2,7 @@ package com.project.demo.mapper;
 
 import com.project.demo.dto.AddressDTO;
 import com.project.demo.dto.UserDTO;
+import com.project.demo.dto.UserSummaryDTO;
 import com.project.demo.model.Address;
 import com.project.demo.model.User;
 import javax.annotation.processing.Generated;
@@ -9,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-05-08T23:39:40+0300",
+    date = "2025-05-12T12:55:28+0300",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 17.0.12 (Oracle Corporation)"
 )
 @Component
@@ -79,5 +80,20 @@ public class UserMapperImpl implements UserMapper {
         addressDTO.setHomeAddress( address.getHomeAddress() );
 
         return addressDTO;
+    }
+
+    @Override
+    public UserSummaryDTO userToUserSummaryDTO(User user) {
+        if ( user == null ) {
+            return null;
+        }
+
+        UserSummaryDTO userSummaryDTO = new UserSummaryDTO();
+
+        userSummaryDTO.setName( user.getName() );
+        userSummaryDTO.setSurname( user.getSurname() );
+        userSummaryDTO.setId( user.getId() );
+
+        return userSummaryDTO;
     }
 }

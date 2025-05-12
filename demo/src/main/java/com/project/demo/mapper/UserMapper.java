@@ -7,6 +7,7 @@ import com.project.demo.dto.AddressDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
+import com.project.demo.dto.UserSummaryDTO;
 
 @Mapper(componentModel = "spring")
 public interface UserMapper {
@@ -37,5 +38,11 @@ public interface UserMapper {
         if (gender == null) return null;
         return UserDTO.Gender.valueOf(gender.name());
     }
+
+/*Mapping for userToUserSummaryDTO */
+    @Mapping(target = "name", source = "name")
+    @Mapping(target = "surname", source = "surname")
+    UserSummaryDTO userToUserSummaryDTO(User user);
+
 
 }
