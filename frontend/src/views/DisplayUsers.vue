@@ -27,6 +27,8 @@ import axios from "axios";
     name: 'DisplayUsers',
     data(){
     return{ 
+      data: null,
+      intervalId: null,
       users:[]
     };
   },
@@ -57,10 +59,23 @@ import axios from "axios";
       async userDetails(userId){
         window.open(`/user/${userId}`, "_blank");
 
+    },
+    async fetchData() {
+      try {
+        const response = await axios.get('http://localhost:8081/api/users')
+       this.users =  response.data;
+      } catch (e) {
+        console.error('Polling failed:', e)
+      }
     }
   },
     mounted(){
         this.getUsers();
+        this.fetchData()
+        this.intervalId = setInterval(this.fetchData, 5000)
+    },
+    beforeUnmount() {
+      clearInterval(this.intervalId)
     }
   }
   </script>

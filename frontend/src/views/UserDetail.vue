@@ -66,25 +66,19 @@ export default {
   data() {
     return {
       user: null,
-        editing: {
-        name: false,
-        surname: false,
-        gender: false,
-        birthdate: false,
-        'address.workAddress': false,
-        'address.homeAddress': false,
+      editing: {
+      name: false,
+      surname: false,
+      gender: false,
+      version: false,
+      birthdate: false,
+      'address.workAddress': false,
+      'address.homeAddress': false,
       }
     };
   },
   async mounted() {
-    const userId = this.$route.params.id;
-    try {
-      const response = await axios.get(`http://localhost:8081/api/users/${userId}`);
-      this.user = response.data;
-    } catch (error) {
-      console.error("Failed to fetch user:", error);
-      alert("User not found or error occurred.");
-    }
+    await this.loadUser();
   },
     methods: {
     // Set the field to editing mode
@@ -98,13 +92,24 @@ export default {
       try {
         // Make PATCH request to backend API to update the user details
         await axios.patch(`http://localhost:8081/api/users/${this.user.id}`, this.user);
+        await this.loadUser();  // Reload latest data from database
         alert("User updated successfully!");
       } catch (error) {
         console.error("Error updating user:", error);
         alert("Error occurred while updating the user.");
       }
+    },
+    async loadUser() {
+      const userId = this.$route.params.id;
+        try {
+          const response = await axios.get(`http://localhost:8081/api/users/${userId}`);
+          this.user = response.data;
+        } catch (error) {
+          console.error("Failed to fetch user:", error);
+          alert("User not found or error occurred.");
+        }
+      }
     }
-  }
 };
 
 </script>
