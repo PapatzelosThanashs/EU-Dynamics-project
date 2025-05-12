@@ -13,6 +13,8 @@ import com.project.demo.mapper.UserMapper;
 import java.util.stream.Collectors;
 import com.project.demo.dto.UserSummaryDTO;
 import org.springframework.dao.OptimisticLockingFailureException;
+import java.util.ArrayList;
+
 
 
 
@@ -36,7 +38,19 @@ public class UserService {
 
     public List<UserSummaryDTO> findAll() {
         
+        List<User> users = userRepository.findAll();
+        List<UserSummaryDTO> summaryDTOs = new ArrayList<>();
+
+        for (User user : users) {
+            UserSummaryDTO dto = userMapper.userToUserSummaryDTO(user);
+            summaryDTOs.add(dto);
+        }
+
+    return summaryDTOs;
+
+    /* Alternative way
     return userRepository.findAll().stream().map(userMapper::userToUserSummaryDTO).collect(Collectors.toList());
+     */
     }
 
     public UserDTO findUser(Long id) {
