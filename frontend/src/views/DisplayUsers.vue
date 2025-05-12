@@ -9,7 +9,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr class="user-row" v-for="user in users" :key="user.id"  @click="userDetails(user)">
+                <tr class="user-row" v-for="user in users" :key="user.id"  @click="userDetails(user.id)">
                 <td>{{ user.name }}</td>
                 <td>{{ user.surname }}</td>
                 <td><button class="delete-button" @click.stop="deleteUser(user.id)">Delete User</button></td>
@@ -54,32 +54,8 @@ import axios from "axios";
         }
       }
     },
-    userDetails(user){
-        const userHtml = `
-    <html>
-      <head>
-        <title>User Details</title>
-        <style>
-          body { font-family: Arial, sans-serif; padding: 2rem; background: #f0f0f0; }
-          h1 { color: #333; }
-          p { margin-bottom: 1rem; }
-        </style>
-      </head>
-      <body>
-        <h1>User Details</h1>
-        <p><strong>Name:</strong> ${user.name}</p>
-        <p><strong>Surname:</strong> ${user.surname}</p>
-        <p><strong>Gender:</strong> ${user.gender}</p>
-        <p><strong>Birthdate:</strong> ${user.birthdate}</p>
-        <p><strong>Work Address:</strong> ${user.address.workAddress}</p>
-        <p><strong>Home Address:</strong> ${user.address.homeAddress}</p>
-        </body>
-    </html>
-  `;
-  
-const blob = new Blob([userHtml], { type: 'text/html' });
-const url = URL.createObjectURL(blob);
-window.open(url);
+      async userDetails(userId){
+        window.open(`/user/${userId}`, "_blank");
 
     }
   },
