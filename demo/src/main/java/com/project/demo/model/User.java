@@ -12,6 +12,7 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.JoinColumn;
 import lombok.Data;
+import jakarta.persistence.Version;
 
 
 
@@ -45,6 +46,10 @@ public class User {
     public User() {
 
     }
+
+    @Version
+    private Long version; //Optimistic lock field
+
  
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "address_id", referencedColumnName = "id", unique = true)

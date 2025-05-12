@@ -31,6 +31,8 @@ public class UserDTO {
     @NotNull(message = "Gender is required", groups = OnCreate.class)
     private Gender gender;  
 
+    private Long version;
+
     private AddressDTO address;
     
 

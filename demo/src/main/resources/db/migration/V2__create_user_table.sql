@@ -6,6 +6,7 @@ CREATE TABLE user (
     birthdate DATE NOT NULL,
     gender VARCHAR(10) NOT NULL,
     address_id BIGINT UNIQUE,
+    version BIGINT DEFAULT 0,
     CONSTRAINT fk_user_address
         FOREIGN KEY (address_id)
         REFERENCES address(id)
