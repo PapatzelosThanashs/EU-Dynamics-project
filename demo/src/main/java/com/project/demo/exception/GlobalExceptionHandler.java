@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import java.util.HashMap;
 import java.util.Map;
+import org.springframework.dao.OptimisticLockingFailureException;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
@@ -37,6 +38,16 @@ public ResponseEntity<String> handleUserNotFound(UserNotFoundException ex) {
             errors.put(error.getField(), error.getDefaultMessage());
         });
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
+    }
+
+    // Handle Optimistic Locking Failure Exception
+    @ExceptionHandler(OptimisticLockingFailureException.class)
+    public ResponseEntity<String> handleOptimisticLockingFailureException(OptimisticLockingFailureException ex) {
+        // Log the exception if needed (optional)
+        // logger.error("Optimistic locking failure: {}", ex.getMessage());
+        
+        // Return an appropriate response
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.CONFLICT);
     }
 
 }

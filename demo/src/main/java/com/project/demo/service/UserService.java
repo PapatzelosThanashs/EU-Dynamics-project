@@ -12,6 +12,8 @@ import com.project.demo.dto.AddressDTO;
 import com.project.demo.mapper.UserMapper;
 import java.util.stream.Collectors;
 import com.project.demo.dto.UserSummaryDTO;
+import org.springframework.dao.OptimisticLockingFailureException;
+
 
 
 
@@ -70,6 +72,13 @@ public class UserService {
 
         User existingUser = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
 
+
+        /* optimistic lock for version, throw exception */
+    if (!existingUser.getVersion().equals(userDTO.getVersion())) {
+        throw new OptimisticLockingFailureException("Version mismatch: current version is " + existingUser.getVersion());
+        
+    }
+
          /* Manually update only non-null fields from userDTO */
     if (userDTO.getName() != null) existingUser.setName(userDTO.getName());
     if (userDTO.getSurname() != null) existingUser.setSurname(userDTO.getSurname());
@@ -90,7 +99,14 @@ public class UserService {
 
         User existingUser = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
 
+             /* optimistic lock for version, throw exception */
+    if (!existingUser.getVersion().equals(userDTO.getVersion())) {
+        throw new OptimisticLockingFailureException("Version mismatch: current version is " + existingUser.getVersion());
+        
+    }
+
         User updatedUser = userMapper.userDTOToUser(userDTO);
+        
 
         updatedUser.setId(id);
 
