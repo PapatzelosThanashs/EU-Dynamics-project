@@ -14,7 +14,7 @@ import com.project.demo.dto.validation.OnPatch;
 @AllArgsConstructor
 public class UserDTO {
 
-    public enum Gender { M, F }
+    //public enum Gender { M, F }
 
     private Long id;
 
@@ -28,8 +28,9 @@ public class UserDTO {
     @NotNull(message = "Birthdate is required", groups = OnCreate.class)
     private LocalDate birthdate;
     
-    @NotNull(message = "Gender is required", groups = OnCreate.class)
-    private Gender gender;  
+    @Pattern(regexp = "M|F", message = "Gender must be 'M' or 'F'", groups = OnCreate.class)
+    @NotBlank(message = "Gender is required", groups = OnCreate.class)
+    private String gender;  
 
     private Long version;
 

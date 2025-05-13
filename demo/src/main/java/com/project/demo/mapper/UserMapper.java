@@ -28,15 +28,16 @@ public interface UserMapper {
     /* Mapstruct can not automap enums, Custom enum mapping */
 
     @Named("dtoToEntityGender")
-    default User.Gender mapDtoGender(UserDTO.Gender gender) {
-        if (gender == null) return null;
-        return User.Gender.valueOf(gender.name());
+    default User.Gender mapDtoGender(String gender) {
+        if (gender.equals("")) return null;
+             return User.Gender.valueOf(gender.toUpperCase());
+       
     }
 
     @Named("entityToDtoGender")
-    default UserDTO.Gender mapEntityGender(User.Gender gender) {
+    default String mapEntityGender(User.Gender gender) {
         if (gender == null) return null;
-        return UserDTO.Gender.valueOf(gender.name());
+        return gender.name();
     }
 
 /*Mapping for userToUserSummaryDTO */
