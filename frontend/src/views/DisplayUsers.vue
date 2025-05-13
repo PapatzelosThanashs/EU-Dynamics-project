@@ -1,6 +1,8 @@
 <template>
     <div class="displayusers">
-    
+      <div class="refresh-container">
+        <button class="refresh-button" @click="getUsers()">🔄 Refresh Users</button>
+      </div>
         <table class="user-table">
             <thead>
                 <tr>
@@ -12,7 +14,7 @@
                 <tr class="user-row" v-for="user in users" :key="user.id"  @click="userDetails(user.id)">
                 <td>{{ user.name }}</td>
                 <td>{{ user.surname }}</td>
-                <td><button class="delete-button" @click.stop="deleteUser(user.id)">Delete User</button></td>
+                <td><button class="delete-button" @click.stop="deleteUser(user.id)">🗑️ Delete User</button></td>
                 </tr>
             </tbody>
         </table>
@@ -42,16 +44,16 @@ import axios from "axios";
         }
         },
         async deleteUser(userId) {
-      if (confirm("Are you sure you want to delete this user?")) {
-        try {
-          await axios.delete(`http://localhost:8081/api/users/${userId}`);
-          this.users = this.users.filter(user => user.id !== userId);
-          alert("User successfully deleted");
-        } catch (error) {
-          console.error("Error deleting user:", error);
-          alert("Delete failed.");
+          if (confirm("Are you sure you want to delete this user?")) {
+            try {
+              await axios.delete(`http://localhost:8081/api/users/${userId}`);
+              this.users = this.users.filter(user => user.id !== userId);
+              alert("User successfully deleted");
+            } catch (error) {
+              console.error("Error deleting user:", error);
+              alert("Delete failed.");
+            }
         }
-      }
     },
       async userDetails(userId){
         window.open(`/user/${userId}`, "_blank");
@@ -108,13 +110,36 @@ import axios from "axios";
   border: none;
   padding: 6px 12px;
   border-radius: 4px;
-  font-size: 14px;
+  font-size: 1rem;
   cursor: pointer;
 }
 
 .delete-button:hover {
   background-color: #e6331f;
 }
+
+.refresh-button {
+  background-color: #77c24c;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  margin: 0.5rem;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.refresh-button:hover {
+  background-color: #64b635;
+}
+
+.refresh-container {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start; /* Align left */
+  margin-bottom: 1rem; /* Space between button and table */
+}
+
 
 
   </style>

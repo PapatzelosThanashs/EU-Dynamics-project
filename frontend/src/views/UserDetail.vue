@@ -89,6 +89,7 @@ export default {
     // Save the edited field and exit editing mode
     async saveField(field) {
       this.editing[field] = false;  // Exit editing mode for the specific field
+      if (confirm("Are you sure you want to update this user?")) {
       try {
         // Make PATCH request to backend API to update the user details
         await axios.patch(`http://localhost:8081/api/users/${this.user.id}`, this.user);
@@ -98,6 +99,7 @@ export default {
         console.error("Error updating user:", error);
         alert("Error occurred while updating the user.");
       }
+    }
     },
     async loadUser() {
       const userId = this.$route.params.id;
