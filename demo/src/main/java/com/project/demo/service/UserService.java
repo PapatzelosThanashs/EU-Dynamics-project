@@ -14,6 +14,8 @@ import java.util.stream.Collectors;
 import com.project.demo.dto.UserSummaryDTO;
 import org.springframework.dao.OptimisticLockingFailureException;
 import java.util.ArrayList;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 
 
 
@@ -55,7 +57,8 @@ public class UserService {
 
     public UserDTO findUser(Long id) {
 
-        User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
+       // User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
+       User user = userRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User with id " + id + " not found"));
 
     return userMapper.userToUserDTO(user);  // Use MapStruct to map User to UserDTO
   

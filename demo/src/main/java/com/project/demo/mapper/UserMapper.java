@@ -30,7 +30,11 @@ public interface UserMapper {
     @Named("dtoToEntityGender")
     default User.Gender mapDtoGender(String gender) {
         if (gender.equals("")) return null;
+        try {
              return User.Gender.valueOf(gender.toUpperCase());
+        } catch (IllegalArgumentException ex) {
+            throw new IllegalArgumentException("Invalid gender value: must be 'M' or 'F'");
+        }
        
     }
 

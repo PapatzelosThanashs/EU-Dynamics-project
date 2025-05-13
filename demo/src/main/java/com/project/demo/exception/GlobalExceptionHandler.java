@@ -9,28 +9,31 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import java.util.HashMap;
 import java.util.Map;
 import org.springframework.dao.OptimisticLockingFailureException;
+import org.springframework.web.server.ResponseStatusException;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
+    /* Handle database errors */
     @ExceptionHandler(DataAccessException.class)
     public ResponseEntity<String> handleDataAccess(DataAccessException ex) {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body("Database error occurred");
     }
 
+    /* Catch-all for unexpected runtime exceptions */
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<String> handleRuntime(RuntimeException ex) {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(ex.getMessage()); // Shows "Database error occurred"
+                .body("Unexpected error: " + ex.getMessage()); 
     }
-/** custom exception */
+/* Custom application exception */
     @ExceptionHandler(UserNotFoundException.class)
 public ResponseEntity<String> handleUserNotFound(UserNotFoundException ex) {
     return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
 }
 
-/* validation exception */
+/*  Handle @Valid validation errors (e.g., @NotNull, @Pattern) */
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, String>> handleValidationExceptions(MethodArgumentNotValidException ex) {
         Map<String, String> errors = new HashMap<>();
@@ -40,7 +43,7 @@ public ResponseEntity<String> handleUserNotFound(UserNotFoundException ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
     }
 
-    // Handle Optimistic Locking Failure Exception
+    /* Handle Optimistic Locking Failure Exception */
     @ExceptionHandler(OptimisticLockingFailureException.class)
     public ResponseEntity<String> handleOptimisticLockingFailureException(OptimisticLockingFailureException ex) {
         // Log the exception if needed (optional)
@@ -49,5 +52,23 @@ public ResponseEntity<String> handleUserNotFound(UserNotFoundException ex) {
         // Return an appropriate response
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.CONFLICT);
     }
+
+    /* Handle illegal arguments (e.g., invalid enum value conversion) */
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<String> handleIllegalArgumentException(IllegalArgumentException ex) {
+        return ResponseEntity.badRequest().body(ex.getMessage());
+    }
+
+
+    /*   Handle Spring's ResponseStatusException */
+    @ExceptionHandler(ResponseStatusException.class)
+    public ResponseEntity<Map<String, Object>> handleResponseStatusException(ResponseStatusException ex) {
+        Map<String, Object> error = new HashMap<>();
+        error.put("status", ex.getStatusCode().value());
+        error.put("message", ex.getReason());
+        return ResponseEntity.status(ex.getStatusCode()).body(error);
+    }
+
+ 
 
 }
