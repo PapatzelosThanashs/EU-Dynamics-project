@@ -97,7 +97,7 @@ public class UserService {
     if (userDTO.getName() != null) existingUser.setName(userDTO.getName());
     if (userDTO.getSurname() != null) existingUser.setSurname(userDTO.getSurname());
     if (userDTO.getBirthdate() != null) existingUser.setBirthdate(userDTO.getBirthdate());
-    if (userDTO.getGender() != null) existingUser.setGender(userMapper.userDTOToUser(userDTO).getGender());
+    if (userDTO.getGender()!= null && !userDTO.getGender().trim().isEmpty() ) existingUser.setGender(userMapper.userDTOToUser(userDTO).getGender());
     if (userDTO.getAddress() != null) {
         Address address = userMapper.addressDTOToAddress(userDTO.getAddress());
         existingUser.setAddress(address);
