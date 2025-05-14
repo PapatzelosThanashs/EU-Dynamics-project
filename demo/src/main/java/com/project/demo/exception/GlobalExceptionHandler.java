@@ -4,7 +4,6 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-/* for validation*/
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import java.util.HashMap;
 import java.util.Map;
@@ -13,68 +12,60 @@ import org.springframework.web.server.ResponseStatusException;
 import com.project.demo.dto.ErrorResponse;
 import org.springframework.web.context.request.WebRequest;
 import java.time.LocalDateTime;
+import org.springframework.validation.FieldError;
+
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
     /* Handle database errors */
     @ExceptionHandler(DataAccessException.class)
-    public ResponseEntity<String> handleDataAccess(DataAccessException ex) {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body("Database error occurred");
+    public ResponseEntity<ErrorResponse> handleDataAccess(DataAccessException ex, WebRequest request) {
+        return buildErrorResponse("Database error occurred", HttpStatus.INTERNAL_SERVER_ERROR, request);
     }
 
-    /* Catch-all for unexpected runtime exceptions */
-    @ExceptionHandler(RuntimeException.class)
-    public ResponseEntity<String> handleRuntime(RuntimeException ex) {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body("Unexpected error: " + ex.getMessage()); 
+    /* Catch-all for unexpected exceptions */
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ErrorResponse> handleAllOtherExceptions(Exception ex, WebRequest request) {
+        return buildErrorResponse("Unexpected error occurred", HttpStatus.INTERNAL_SERVER_ERROR, request);
     }
 
-    //@ExceptionHandler(UserNotFoundException.class)
-   // public ResponseEntity<String> handleUserNotFound(UserNotFoundException ex) {
-    //return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
-    //}
-    /* Custom application exception */
+
+    /* Custom application exception , not used, just for demonstration*/
     @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity<ErrorResponse> handleUserNotFound(UserNotFoundException ex, WebRequest request) {
         return buildErrorResponse(ex.getMessage(), HttpStatus.NOT_FOUND, request);
     }
 
-/*  Handle @Valid validation errors (e.g., @NotNull, @Pattern) */
+
+    /*  Handle @Valid validation errors (e.g., @NotNull, @Pattern) */
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, String>> handleValidationExceptions(MethodArgumentNotValidException ex) {
         Map<String, String> errors = new HashMap<>();
-        ex.getBindingResult().getFieldErrors().forEach(error -> {
-            errors.put(error.getField(), error.getDefaultMessage());
-        });
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
+      for (FieldError error : ex.getBindingResult().getFieldErrors()) {
+        errors.put(error.getField(), error.getDefaultMessage());
+    }
+
+        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
 
     /* Handle Optimistic Locking Failure Exception */
-    @ExceptionHandler(OptimisticLockingFailureException.class)
-    public ResponseEntity<String> handleOptimisticLockingFailureException(OptimisticLockingFailureException ex) {
-        // Log the exception if needed (optional)
-        // logger.error("Optimistic locking failure: {}", ex.getMessage());
-        
-        // Return an appropriate response
-        return new ResponseEntity<>(ex.getMessage(), HttpStatus.CONFLICT);
+     @ExceptionHandler(OptimisticLockingFailureException.class)
+    public ResponseEntity<ErrorResponse> handleOptimisticLocking(OptimisticLockingFailureException ex, WebRequest request) {
+        return buildErrorResponse("Update conflict: " + ex.getMessage(), HttpStatus.CONFLICT, request);
     }
 
     /* Handle illegal arguments (e.g., invalid enum value conversion) */
-    @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<String> handleIllegalArgumentException(IllegalArgumentException ex) {
-        return ResponseEntity.badRequest().body(ex.getMessage());
+   @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<ErrorResponse> handleIllegalArgument(IllegalArgumentException ex, WebRequest request) {
+        return buildErrorResponse(ex.getMessage(), HttpStatus.BAD_REQUEST, request);
     }
 
 
-    /*   Handle Spring's ResponseStatusException */
+    /*   Handle Spring's ResponseStatusException , getReason() available*/
     @ExceptionHandler(ResponseStatusException.class)
-    public ResponseEntity<Map<String, Object>> handleResponseStatusException(ResponseStatusException ex) {
-        Map<String, Object> error = new HashMap<>();
-        error.put("status", ex.getStatusCode().value());
-        error.put("message", ex.getReason());
-        return ResponseEntity.status(ex.getStatusCode()).body(error);
+    public ResponseEntity<ErrorResponse> handleResponseStatusException(ResponseStatusException ex, WebRequest request) {
+        return buildErrorResponse(ex.getReason(), HttpStatus.valueOf(ex.getStatusCode().value()), request);
     }
 
     /* Response based on ErrorResponseDto*/
@@ -87,6 +78,8 @@ public class GlobalExceptionHandler {
                 LocalDateTime.now()
         );
         return new ResponseEntity<>(error, status);
+        // using static methods
+        // return ResponseEntity.status(status).body(error);
     }
 
  
