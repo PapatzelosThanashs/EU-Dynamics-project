@@ -10,6 +10,9 @@ import java.util.HashMap;
 import java.util.Map;
 import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.web.server.ResponseStatusException;
+import com.project.demo.dto.ErrorResponse;
+import org.springframework.web.context.request.WebRequest;
+import java.time.LocalDateTime;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
@@ -27,11 +30,16 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body("Unexpected error: " + ex.getMessage()); 
     }
-/* Custom application exception */
+
+    //@ExceptionHandler(UserNotFoundException.class)
+   // public ResponseEntity<String> handleUserNotFound(UserNotFoundException ex) {
+    //return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    //}
+    /* Custom application exception */
     @ExceptionHandler(UserNotFoundException.class)
-public ResponseEntity<String> handleUserNotFound(UserNotFoundException ex) {
-    return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
-}
+    public ResponseEntity<ErrorResponse> handleUserNotFound(UserNotFoundException ex, WebRequest request) {
+        return buildErrorResponse(ex.getMessage(), HttpStatus.NOT_FOUND, request);
+    }
 
 /*  Handle @Valid validation errors (e.g., @NotNull, @Pattern) */
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -67,6 +75,18 @@ public ResponseEntity<String> handleUserNotFound(UserNotFoundException ex) {
         error.put("status", ex.getStatusCode().value());
         error.put("message", ex.getReason());
         return ResponseEntity.status(ex.getStatusCode()).body(error);
+    }
+
+    /* Response based on ErrorResponseDto*/
+    private ResponseEntity<ErrorResponse> buildErrorResponse(String message, HttpStatus status, WebRequest request) {
+        ErrorResponse error = new ErrorResponse(
+                status.value(),
+                status.getReasonPhrase(),
+                message,
+                request.getDescription(false).replace("uri=", ""),
+                LocalDateTime.now()
+        );
+        return new ResponseEntity<>(error, status);
     }
 
  
