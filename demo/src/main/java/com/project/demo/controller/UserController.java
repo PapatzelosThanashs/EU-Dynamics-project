@@ -25,6 +25,7 @@ import com.project.demo.dto.UserSummaryDTO;
 @CrossOrigin(origins = "http://localhost:8080") 
 
 @RestController
+
 @RequestMapping("api/users")
 public class UserController {
 

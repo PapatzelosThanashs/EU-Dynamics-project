@@ -13,20 +13,23 @@ import com.project.demo.dto.ErrorResponse;
 import org.springframework.web.context.request.WebRequest;
 import java.time.LocalDateTime;
 import org.springframework.validation.FieldError;
-
+import lombok.extern.slf4j.Slf4j;
 
 @ControllerAdvice
+@Slf4j
 public class GlobalExceptionHandler {
 
     /* Handle database errors */
     @ExceptionHandler(DataAccessException.class)
     public ResponseEntity<ErrorResponse> handleDataAccess(DataAccessException ex, WebRequest request) {
+        log.error("Database error: {}", ex.getMessage(), ex);
         return buildErrorResponse("Database error occurred", HttpStatus.INTERNAL_SERVER_ERROR, request);
     }
 
     /* Catch-all for unexpected exceptions */
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleAllOtherExceptions(Exception ex, WebRequest request) {
+        log.error("Unhandled exception: {}", ex.getMessage(), ex);
         return buildErrorResponse("Unexpected error occurred", HttpStatus.INTERNAL_SERVER_ERROR, request);
     }
 
@@ -44,14 +47,16 @@ public class GlobalExceptionHandler {
         Map<String, String> errors = new HashMap<>();
       for (FieldError error : ex.getBindingResult().getFieldErrors()) {
         errors.put(error.getField(), error.getDefaultMessage());
+        log.error("Validation error: {}", ex.getMessage(), ex);
     }
-
+        
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
 
     /* Handle Optimistic Locking Failure Exception */
      @ExceptionHandler(OptimisticLockingFailureException.class)
     public ResponseEntity<ErrorResponse> handleOptimisticLocking(OptimisticLockingFailureException ex, WebRequest request) {
+        log.error("Optimistic Locking error: {}", ex.getMessage(), ex);
         return buildErrorResponse("Update conflict: " + ex.getMessage(), HttpStatus.CONFLICT, request);
     }
 
@@ -65,6 +70,7 @@ public class GlobalExceptionHandler {
     /*   Handle Spring's ResponseStatusException , getReason() available*/
     @ExceptionHandler(ResponseStatusException.class)
     public ResponseEntity<ErrorResponse> handleResponseStatusException(ResponseStatusException ex, WebRequest request) {
+        log.warn("Handled ResponseStatusException: {}", ex.getReason(), ex);
         return buildErrorResponse(ex.getReason(), HttpStatus.valueOf(ex.getStatusCode().value()), request);
     }
 
