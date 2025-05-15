@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 import org.springframework.validation.FieldError;
 import lombok.extern.slf4j.Slf4j;
 
+
 @ControllerAdvice
 @Slf4j
 public class GlobalExceptionHandler {
@@ -43,14 +44,15 @@ public class GlobalExceptionHandler {
 
     /*  Handle @Valid validation errors (e.g., @NotNull, @Pattern) */
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<Map<String, String>> handleValidationExceptions(MethodArgumentNotValidException ex) {
-        Map<String, String> errors = new HashMap<>();
+    public ResponseEntity<ErrorResponse> handleValidationExceptions(MethodArgumentNotValidException ex, WebRequest request) {
+
+        String errors="";
+
       for (FieldError error : ex.getBindingResult().getFieldErrors()) {
-        errors.put(error.getField(), error.getDefaultMessage());
-        log.error("Validation error: {}", ex.getMessage(), ex);
+        errors= errors + "---"+ error.getDefaultMessage()  ;
     }
-        
-        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+
+       return buildErrorResponse("Validation error: " + errors, HttpStatus.BAD_REQUEST, request);
     }
 
     /* Handle Optimistic Locking Failure Exception */
