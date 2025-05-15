@@ -40,7 +40,7 @@ import axios from "axios";
 
         } catch (error) {
             console.error("Error fetching users:", error);
-            alert("Failed to load users.");
+            alert(error.response.data.message);
         }
         },
         async deleteUser(userId) {
@@ -51,7 +51,7 @@ import axios from "axios";
               alert("User successfully deleted");
             } catch (error) {
               console.error("Error deleting user:", error);
-              alert("Delete failed.");
+              alert(error.response.data.message);
             }
         }
     },

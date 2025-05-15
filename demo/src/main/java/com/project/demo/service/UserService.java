@@ -76,7 +76,7 @@ public class UserService {
     public void deleteUser(Long id) {
 
         if (!userRepository.existsById(id)) {
-            throw new UserNotFoundException(id);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No user found with id " + id + " to delete");
         }
 
             userRepository.deleteById(id);
@@ -87,7 +87,7 @@ public class UserService {
     /* update specific fields */
     public UserDTO patchUser(Long id, UserDTO userDTO) {
 
-        User existingUser = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
+        User existingUser = userRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No user found with id " + id + " to patch"));
 
 
         /* optimistic lock for version, throw exception */
@@ -114,7 +114,7 @@ public class UserService {
     public UserDTO updateUser(Long id, UserDTO userDTO) {
 
 
-        User existingUser = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
+        User existingUser = userRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No user found with id " + id + " to update"));
 
              /* optimistic lock for version, throw exception */
     if (!existingUser.getVersion().equals(userDTO.getVersion())) {
