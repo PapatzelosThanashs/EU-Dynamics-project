@@ -47,7 +47,7 @@
       <div>
         <label for="workAddress">Work Address:</label>
         <textarea id="workAddress" v-model="newUser.address.workAddress"></textarea>
-         <span v-if="errors.workAddress">{{ errors.workAddress }}</span>
+        <span v-if="errors.workAddress">{{ errors.workAddress }}</span>
       </div>
 
       <!-- Home Address (Non-Mandatory) -->
