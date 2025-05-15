@@ -14,6 +14,8 @@ import org.springframework.web.context.request.WebRequest;
 import java.time.LocalDateTime;
 import org.springframework.validation.FieldError;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.converter.HttpMessageNotReadableException;
+
 
 
 @ControllerAdvice
@@ -74,6 +76,13 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> handleResponseStatusException(ResponseStatusException ex, WebRequest request) {
         log.warn("Handled ResponseStatusException: {}", ex.getReason(), ex);
         return buildErrorResponse(ex.getReason(), HttpStatus.valueOf(ex.getStatusCode().value()), request);
+    }
+
+    /*Jackson deserialization error, add it for birthdate LocalDate type. When the client tries to input different format. */
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<ErrorResponse> handleInvalidFormat(HttpMessageNotReadableException ex, WebRequest request) {
+        String message = "Invalid input format: " + ex.getMostSpecificCause().getMessage();
+        return buildErrorResponse(message, HttpStatus.BAD_REQUEST, request);
     }
 
     /* Response based on ErrorResponseDto*/
