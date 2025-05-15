@@ -8,6 +8,7 @@ import jakarta.validation.constraints.*;
 import com.project.demo.dto.validation.OnCreate;
 import com.project.demo.dto.validation.OnPatch;
 import java.util.List;
+import org.springframework.format.annotation.DateTimeFormat;
 
 
 @Data
@@ -20,20 +21,27 @@ public class UserDTO {
     private Long id;
 
     @NotBlank(message = "name is required", groups = OnCreate.class )
-    @Pattern(regexp = ".+", message = "name must not be empty", groups = OnPatch.class )
+    @Pattern.List({
+        @Pattern(regexp = "^[a-zA-Z0-9-]+$", message = "Only letters, numbers, and dashes are allowed", groups = OnCreate.class),
+        @Pattern(regexp = "^$|^[a-zA-Z0-9-]+$", message = "Name must not be empty, letters, numbers, and dashes are allowed ", groups = OnPatch.class)
+    })
     private String name;
 
     @NotBlank(message = "Surname is required", groups = OnCreate.class)
     @Size(max = 12, message = "Surname must be at most 12 characters", groups = OnCreate.class)
-    @Pattern(regexp = ".+", message = "surname must not be empty", groups = OnPatch.class )
+    @Pattern.List({
+        @Pattern(regexp = "^[a-zA-Z0-9-]+$", message = "Only letters, numbers, and dashes are allowed", groups = OnCreate.class),
+        @Pattern(regexp = "^$|^[a-zA-Z0-9-]+$", message = "Surname must not be empty, letters, numbers, and dashes are allowed ", groups = OnPatch.class )
+    })
     private String surname;
     
     /* no need validation in patch, if is an empty string it will convert it to null */
     @NotNull(message = "Birthdate is required", groups = OnCreate.class)
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate birthdate;
     
-    @Pattern(regexp = "M|F", message = "Gender must be 'M' or 'F'", groups = {OnCreate.class,OnPatch.class} )
     @NotBlank(message = "Gender is required", groups = OnCreate.class)
+    @Pattern(regexp = "M|F", message = "Gender must be 'M' or 'F'", groups = {OnCreate.class,OnPatch.class} )
     private String gender;  
 
     private Long version;
