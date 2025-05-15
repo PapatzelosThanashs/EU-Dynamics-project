@@ -52,6 +52,8 @@ public class GlobalExceptionHandler {
         errors= errors + "---"+ error.getDefaultMessage()  ;
     }
 
+    System.out.println("+++++++++++++++++++++++++++++++++++++"+errors+"++++++++++++++++++++++++++++++" );
+
        return buildErrorResponse("Validation error: " + errors, HttpStatus.BAD_REQUEST, request);
     }
 

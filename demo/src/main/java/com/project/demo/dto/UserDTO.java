@@ -32,10 +32,7 @@ public class UserDTO {
     @NotNull(message = "Birthdate is required", groups = OnCreate.class)
     private LocalDate birthdate;
     
-    @Pattern.List({
-        @Pattern(regexp = "M|F", message = "Gender must be 'M' or 'F'", groups = OnCreate.class ),
-        @Pattern(regexp = ".+", message = "Gender must not be empty", groups = OnPatch.class ),
-    })
+    @Pattern(regexp = "M|F", message = "Gender must be 'M' or 'F'", groups = {OnCreate.class,OnPatch.class} )
     @NotBlank(message = "Gender is required", groups = OnCreate.class)
     private String gender;  
 
