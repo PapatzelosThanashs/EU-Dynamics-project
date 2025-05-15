@@ -9,6 +9,8 @@ import com.project.demo.dto.validation.OnCreate;
 import com.project.demo.dto.validation.OnPatch;
 import java.util.List;
 import org.springframework.format.annotation.DateTimeFormat;
+import jakarta.validation.Valid;
+
 
 
 @Data
@@ -44,8 +46,10 @@ public class UserDTO {
     @Pattern(regexp = "M|F", message = "Gender must be 'M' or 'F'", groups = {OnCreate.class,OnPatch.class} )
     private String gender;  
 
+    @NotNull(message = "Version is required", groups = OnPatch.class)
     private Long version;
 
+    @Valid
     private AddressDTO address;
     
 
