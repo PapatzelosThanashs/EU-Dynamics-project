@@ -24,16 +24,16 @@ public class UserDTO {
 
     @NotBlank(message = "name is required", groups = OnCreate.class )
     @Pattern.List({
-        @Pattern(regexp = "^[a-zA-Z0-9-]+$", message = "Only letters, numbers, and dashes are allowed", groups = OnCreate.class),
-        @Pattern(regexp = "^$|^[a-zA-Z0-9-]+$", message = "Name must not be empty, letters, numbers, and dashes are allowed ", groups = OnPatch.class)
+        @Pattern(regexp = "^[a-zA-Z0-9_-]+$", message = "Only letters, numbers, and dashes are allowed", groups = OnCreate.class),
+        @Pattern(regexp = "^$|^[a-zA-Z0-9_-]+$", message = "Name must not be empty, letters, numbers, and dashes are allowed ", groups = OnPatch.class)
     })
     private String name;
 
     @NotBlank(message = "Surname is required", groups = OnCreate.class)
-    @Size(max = 12, message = "Surname must be at most 12 characters", groups = OnCreate.class)
+    @Size(max = 24, message = "Surname must be at most 24 characters", groups = OnCreate.class)
     @Pattern.List({
-        @Pattern(regexp = "^[a-zA-Z0-9-]+$", message = "Only letters, numbers, and dashes are allowed", groups = OnCreate.class),
-        @Pattern(regexp = "^$|^[a-zA-Z0-9-]+$", message = "Surname must not be empty, letters, numbers, and dashes are allowed ", groups = OnPatch.class )
+        @Pattern(regexp = "^[a-zA-Z0-9_-]+$", message = "Only letters, numbers, and dashes are allowed", groups = OnCreate.class),
+        @Pattern(regexp = "^$|^[a-zA-Z0-9_-]+$", message = "Surname must not be empty, letters, numbers, and dashes are allowed ", groups = OnPatch.class )
     })
     private String surname;
     
