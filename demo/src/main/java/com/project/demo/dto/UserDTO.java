@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import jakarta.validation.constraints.*;
 import com.project.demo.dto.validation.OnCreate;
 import com.project.demo.dto.validation.OnPatch;
+import java.util.List;
 
 
 @Data
@@ -19,16 +20,22 @@ public class UserDTO {
     private Long id;
 
     @NotBlank(message = "name is required", groups = OnCreate.class )
+    @Pattern(regexp = ".+", message = "name must not be empty", groups = OnPatch.class )
     private String name;
 
     @NotBlank(message = "Surname is required", groups = OnCreate.class)
     @Size(max = 12, message = "Surname must be at most 12 characters", groups = OnCreate.class)
+    @Pattern(regexp = ".+", message = "surname must not be empty", groups = OnPatch.class )
     private String surname;
     
+    /* no need validation in patch, if is an empty string it will convert it to null */
     @NotNull(message = "Birthdate is required", groups = OnCreate.class)
     private LocalDate birthdate;
     
-    @Pattern(regexp = "M|F", message = "Gender must be 'M' or 'F'", groups = OnCreate.class )
+    @Pattern.List({
+        @Pattern(regexp = "M|F", message = "Gender must be 'M' or 'F'", groups = OnCreate.class ),
+        @Pattern(regexp = ".+", message = "Gender must not be empty", groups = OnPatch.class ),
+    })
     @NotBlank(message = "Gender is required", groups = OnCreate.class)
     private String gender;  
 

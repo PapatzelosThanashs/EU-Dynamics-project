@@ -97,7 +97,7 @@ export default {
         alert("User updated successfully!");
       } catch (error) {
         console.error("Error updating user:", error);
-        alert("Error occurred while updating the user.");
+        alert(error.response.data.message);
       }
     }
     },
@@ -108,7 +108,8 @@ export default {
           this.user = response.data;
         } catch (error) {
           console.error("Failed to fetch user:", error);
-          alert("User not found or error occurred.");
+         //alert("User not found or error occurred.");
+         alert(error.response.data.message);
         }
       }
     }
