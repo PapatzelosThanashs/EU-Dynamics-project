@@ -10,7 +10,11 @@ import lombok.NoArgsConstructor;
 public class AddressDTO {
 
     private Long id;
+
+    @Pattern(regexp = "^$|^[a-zA-Z0-9-]+$", message = "Name must not be empty, letters, numbers, and dashes are allowed ")
     private String workAddress;
+
+    @Pattern(regexp = "^$|^[a-zA-Z0-9-]+$", message = "Name must not be empty, letters, numbers, and dashes are allowed ")
     private String homeAddress;
 
 
