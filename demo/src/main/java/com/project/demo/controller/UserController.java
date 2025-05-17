@@ -34,7 +34,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 @Tag(name = "User Management", description = "Operations related to user management")
 public class UserController {
 
-    private UserService userService;
+    private final UserService userService;
 
     public UserController(UserService userService){
         this.userService= userService;
