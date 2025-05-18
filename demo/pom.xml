@@ -62,7 +62,6 @@
         <dependency>
         <!-- Flyway migration tool specifically for MySQL/MariaDB databases -->
             <!-- Flyway core -->
-        <dependency>
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-core</artifactId>
             <version>10.20.1</version>
