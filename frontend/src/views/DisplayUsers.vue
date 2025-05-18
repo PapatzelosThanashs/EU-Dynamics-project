@@ -34,7 +34,7 @@ import axios from "axios";
     methods: {
         async getUsers() {
         try {
-            const response = await axios.get("http://localhost:8081/api/users");
+            const response = await axios.get("http://localhost:8080/api/users");
            
             this.users = response.data;
 
