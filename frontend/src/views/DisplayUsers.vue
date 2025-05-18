@@ -3,7 +3,7 @@
       <div class="refresh-container">
         <button class="refresh-button" @click="getUsers()">🔄 Refresh Users</button>
       </div>
-        <table class="user-table1">
+        <table class="user-table">
             <thead>
                 <tr>
                 <th>NAME</th>
