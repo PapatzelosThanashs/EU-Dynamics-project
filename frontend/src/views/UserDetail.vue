@@ -103,7 +103,7 @@ export default {
       if (confirm("Are you sure you want to update this user?")) {
       try {
         // Make PATCH request to backend API to update the user details
-        await axios.patch(`http://localhost:8081/api/users/${this.user.id}`, this.user);
+        await axios.patch(`http://localhost:8080/api/users/${this.user.id}`, this.user);
         await this.loadUser();  // Reload latest data from database
         alert("User updated successfully!");
       } catch (error) {
@@ -116,7 +116,7 @@ export default {
       
       const userId = this.$route.params.id;
         try {
-          const response = await axios.get(`http://localhost:8081/api/users/${userId}`);
+          const response = await axios.get(`http://localhost:8080/api/users/${userId}`);
           this.user = response.data;
         } catch (error) {
           console.error("Failed to fetch user:", error);
