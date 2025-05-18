@@ -1,4 +1,3 @@
-
 # Project: Simple Web application
 
 A full-stack web application with a **Spring Boot** backend and **Vue.js** frontend for user management.
@@ -56,14 +55,14 @@ A full-stack web application with a **Spring Boot** backend and **Vue.js** front
 
 ---
 
-## 🔧 Setup & Run( seperately each framework )
+## 🔧 Setup & Run( seperately each framework at development )
 
 ### Backend Setup
 
 ```bash
 cd demo
-./mvnw clean install
-./mvnw spring-boot:run
+mvn clean install
+mvn spring-boot:run
 ```
 
 - Backend runs on: [http://localhost:8081](http://localhost:8081)
@@ -100,14 +99,14 @@ npm run build
 - This generates a dist/ directory containing production-ready static files (HTML, CSS, JS).
 
 ### Backend Setup
-- Omit import org.springframework.web.bind.annotation.CrossOrigin and @CrossOrigin(origins = "http://localhost:8080") in UserController
-- Copy everything inside frontend/dist/ into demo/src/main/resources/static/
-- Make sure the static/ directory exists before running the command. 
+- Change branch "prod" 
+
 
 ```bash
+git branch prod
 cp -r frontend/dist/* backend/src/main/resources/static/
 cd demo
-./mvnw clean package
+mvn clean package
 ```
 - The executable file generated at target/demo-1.0.0.jar. You can run it now by:
 ```bash
@@ -122,7 +121,7 @@ Open [http://localhost:8080](http://localhost:8080) in your browser.
 
 ## ⚙️ Configuration
 
-### Backend
+### Backend - for development
 
 Edit `demo/src/main/resources/application.properties`.
 
@@ -163,8 +162,8 @@ logging.level.com.project.demo=DEBUG
 logging.file.name=logs/app.log
 logging.file.path=logs/
 
-#Omit this if you are going to run the application as a bundled .jar.
-server.port=8081 
+
+spring.mvc.pathmatch.matching-strategy=ant_path_matcher
 ```
 
 
@@ -179,7 +178,6 @@ http://localhost:8080/swagger-ui.html
 ```
 
 You can view all available endpoints, request/response models, and try API calls interactively.
-
 
 
 
