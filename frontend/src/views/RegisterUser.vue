@@ -140,7 +140,7 @@
 
         try {
           // Send POST request to the backend to create the new user
-          const response = await axios.post("http://localhost:8081/api/users", this.newUser);
+          const response = await axios.post("http://localhost:8080/api/users", this.newUser);
 
           // Add the newly created user to the list locally
           this.users.push(response.data);
