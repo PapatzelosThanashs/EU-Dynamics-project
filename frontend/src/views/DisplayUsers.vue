@@ -46,7 +46,7 @@ import axios from "axios";
         async deleteUser(userId) {
           if (confirm("Are you sure you want to delete this user?")) {
             try {
-              await axios.delete(`http://localhost:8081/api/users/${userId}`);
+              await axios.delete(`http://localhost:8080/api/users/${userId}`);
               this.users = this.users.filter(user => user.id !== userId);
               alert("User successfully deleted");
             } catch (error) {
