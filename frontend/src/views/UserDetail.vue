@@ -1,5 +1,3 @@
-<!-- src/components/UserDetail.vue -->
-
 <template>
   <div>
     
@@ -107,7 +105,6 @@ export default {
         await this.loadUser();  // Reload latest data from database
         alert("User updated successfully!");
       } catch (error) {
-        console.error("Error updating user:", error);
         alert(error.response.data.message);
       }
     }
@@ -119,7 +116,6 @@ export default {
           const response = await axios.get(`http://localhost:8081/api/users/${userId}`);
           this.user = response.data;
         } catch (error) {
-          console.error("Failed to fetch user:", error);
          //alert("User not found or error occurred.");
          alert(error.response.data.message);
         }

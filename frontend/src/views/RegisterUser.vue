@@ -71,7 +71,6 @@
     name: 'RegisterUser',
       data() {
         return {
-          users: [],  // Users list
           newUser: {  // New user data
           name: '',
           surname: '',
@@ -140,10 +139,8 @@
 
         try {
           // Send POST request to the backend to create the new user
-          const response = await axios.post("http://localhost:8081/api/users", this.newUser);
-
-          // Add the newly created user to the list locally
-          this.users.push(response.data);
+          await axios.post("http://localhost:8081/api/users", this.newUser);
+          
 
           // Reset the form fields
           this.newUser.name = '';
@@ -157,7 +154,6 @@
 
           alert("User created successfully!");
         } catch (error) {
-          console.error("Error creating user:", error);
           alert(error.response.data.message);
         }
       },

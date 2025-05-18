@@ -39,7 +39,6 @@ import axios from "axios";
             this.users = response.data;
 
         } catch (error) {
-            console.error("Error fetching users:", error);
             alert(error.response.data.message);
         }
         },
@@ -50,7 +49,6 @@ import axios from "axios";
               this.users = this.users.filter(user => user.id !== userId);
               alert("User successfully deleted");
             } catch (error) {
-              console.error("Error deleting user:", error);
               alert(error.response.data.message);
             }
         }
@@ -60,7 +58,7 @@ import axios from "axios";
 
     }
   },
-    mounted(){
+    created(){
         this.getUsers();
     }
   }

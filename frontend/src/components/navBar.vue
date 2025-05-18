@@ -3,7 +3,7 @@
     <div class="navbar-logo">Project: Simple Web application</div>
     <ul class="navbar-links">
       <li><router-link to="/" >Home</router-link></li>
-      <li><router-link to="/Users" >Users</router-link></li>
+      <li><router-link to="/users" >Users</router-link></li>
       <li><router-link to="/register" >Register</router-link></li>
     </ul>
   </nav>
