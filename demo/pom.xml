@@ -24,10 +24,10 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
         <dependency>
-        <!--MariaDB JDBC driver for connecting to MariaDB/MySQL databases -->
-            <groupId>org.mariadb.jdbc</groupId>
-            <artifactId>mariadb-java-client</artifactId>
-            <version>3.3.2</version> 
+        <!--MySQL JDBC driver for connecting to MariaDB/MySQL databases -->
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+            <version>8.0.33</version> 
         </dependency>
         <dependency>
         <!-- Spring Data JPA + Hibernate for ORM and database access. -->
@@ -62,7 +62,11 @@
         <dependency>
         <!-- Flyway migration tool specifically for MySQL/MariaDB databases -->
             <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
+            <version>10.20.1</version> 
+            <groupId>org.flywaydb</groupId>
             <artifactId>flyway-mysql</artifactId>
+            <version>10.20.1</version> 
         </dependency>
         <dependency>
         <!-- Production-ready features like metrics, health checks, and monitoring -->
