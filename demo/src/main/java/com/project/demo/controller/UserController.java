@@ -15,7 +15,6 @@ import com.project.demo.dto.UserDTO;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.validation.annotation.Validated; // for Validate
-import org.springframework.web.bind.annotation.CrossOrigin; //<--- delete this. only for testing vue
 import com.project.demo.dto.validation.OnCreate;
 import com.project.demo.dto.validation.OnPatch;
 import com.project.demo.dto.UserSummaryDTO;
@@ -24,10 +23,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Parameter;
 
-
-
-
-@CrossOrigin(origins = "http://localhost:8080") 
+ 
 
 @RestController
 @RequestMapping("api/users")
