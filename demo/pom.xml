@@ -61,13 +61,20 @@
         </dependency>
         <dependency>
         <!-- Flyway migration tool specifically for MySQL/MariaDB databases -->
+            <!-- Flyway core -->
+        <dependency>
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-core</artifactId>
-            <version>10.20.1</version> 
+            <version>10.20.1</version>
+        </dependency>
+
+        <!-- Flyway support for MySQL/MariaDB -->
+        <dependency>
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-mysql</artifactId>
-            <version>10.20.1</version> 
+            <version>10.20.1</version>
         </dependency>
+
         <dependency>
         <!-- Production-ready features like metrics, health checks, and monitoring -->
             <groupId>org.springframework.boot</groupId>
