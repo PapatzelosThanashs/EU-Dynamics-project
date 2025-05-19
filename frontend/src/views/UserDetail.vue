@@ -42,13 +42,13 @@
                 <tr>
                     <td><strong>Work Address</strong></td>
                     <td @click="editField('workAddress')" v-if="!editing['workAddress']">{{ user.address.workAddress }}</td>
-                    <td v-else><input type="text" v-model="user.address.workAddress" @blur="saveField('address.workAddress')"  @input="validateField('workAddress')"/></td>
+                    <td v-else><input type="text" v-model="user.address.workAddress" @blur="saveField('workAddress')"  @input="validateField('workAddress')"/></td>
                     <span v-if="errors.workAddress">{{ errors.workAddress }}</span>
                 </tr>
                 <tr>
                     <td><strong>Home Address</strong></td>
                     <td @click="editField('homeAddress')" v-if="!editing['homeAddress']">{{ user.address.homeAddress }}</td>
-                    <td v-else><input type="text" v-model="user.address.homeAddress" @blur="saveField('address.homeAddress')"  @input="validateField('ahomeAddress')"/></td>
+                    <td v-else><input type="text" v-model="user.address.homeAddress" @blur="saveField('homeAddress')"  @input="validateField('homeAddress')"/></td>
                     <span v-if="errors.homeAddress">{{ errors.homeAddress }}</span>
                 </tr>
             </tbody>
@@ -94,8 +94,8 @@ export default {
     // Save the edited field and exit editing mode
     async saveField(field) {
     
-      this.validateField(field);
-      if (this.errors[field] || this.errors.workAddress || this.errors.homeAddress) return;
+     
+      if (this.errors[field] ) return;
 
       this.editing[field] = false;  // Exit editing mode for the specific field
       if (confirm("Are you sure you want to update this user?")) {
@@ -160,14 +160,10 @@ export default {
               this.errors.birthdate = "Birthdate cannot be in the future";
             }
           }
-
-
        
 
           if (field === 'workAddress' || field === 'homeAddress') {
-             if (!value) {
-              this.errors[field] = "This field is required";
-            } else if (!/^[a-zA-Z0-9-]+$/.test(value)) {
+               if (!/^[a-zA-Z0-9- ]+$/.test(value)) {
               this.errors[field] = "Only letters, numbers, and dashes allowed";
             }
           }
